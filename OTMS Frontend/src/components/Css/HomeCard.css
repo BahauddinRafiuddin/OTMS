@@ -1,0 +1,10 @@
+.HomeCard{
+    margin-top: 30px;
+}
+.HomeCard hr{
+    display: block;
+    height: 1.5px;
+    background-color: black;
+    border: none;
+    outline: none;
+}

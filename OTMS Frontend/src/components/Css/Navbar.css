@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+.navbar {
+    display: flex;
+    border-bottom: 1px solid;
+    margin: 10px 5%;
+    justify-content: space-between;
+    min-height: 65px;
+    font-weight: bold;
+    font-family: Outfit;
+    align-items: center;
+    /* background-color: rgb(202, 202, 212); */
+    padding: 0px 10px;
+    border-radius: 3px;
+}
+
+.navbar span {
+    font-size: 25px;
+    cursor: pointer;
+}
+.navbar span:hover{
+    text-shadow: 1px 1px grey;
+}
+
+.navbar ul {
+    padding-top: 10px;
+    display: flex;
+    gap: 15px;
+    text-decoration: none;
+    padding: 0px;
+    font-size: 18px;
+
+}
+
+.navbar a {
+    text-decoration: none;
+    list-style: none;
+    color: black;
+    font-weight: 500;
+}
+
+.navbar a:hover {
+    font-weight: bold;
+}
+
+hr {
+    display: none;
+}
+
+.active hr {
+    display: block;
+    outline: none;
+    width: 15px;
+}
+
+.nav-btn {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn button {
+    border: none;
+    outline: none;
+    width: auto;
+    font-size: 15px;
+    border-radius: 9px;
+    padding: 10px;
+    font-family: Outfit;
+    font-weight: 500;
+    width: 100px;
+    box-shadow: 1.5px 1.5px black;
+    transition: all ease 0.5s;
+    border: 1px medium;
+    cursor: pointer;
+}
+
+.nav-btn button:hover {
+    box-shadow: none;
+    font-size: 14px;
+}
