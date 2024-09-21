@@ -96,10 +96,10 @@ const getPropertyById = async (req, res) => {
 const getPropertyByLandlordId = async (req, res) => {
     try {
         const properties = await Property.find({ landlord: req.params.landlordId })
-        .populate({
-            path: "landlord",
-            select: "firstName lastName"
-        })
+            .populate({
+                path: "landlord",
+                select: "firstName lastName"
+            })
 
         res.json({ success: true, properties });
     } catch (error) {
@@ -107,21 +107,23 @@ const getPropertyByLandlordId = async (req, res) => {
     }
 }
 
-// Update Property By PropertyId:...
-const updateProperty = async (req, res) => {
+// Get Property By Tenant Id....
+const getPropertyByTenantId = async (req, res) => {
     try {
-        const { propertyId } = req.params
-        const property = await Property.findByIdAndUpdate(propertyId, req.body, { new: true })
+        const properties = await Property.find({ tenant: req.params.tenantId })
+            .populate({
+                path: "tenant",
+                select: "firstName lastName"
+            })
 
-        if (!property) {
-            return res.json({ success: false, message: "Property Not Found!" })
+        if (!properties) {
+            return res.status(404)
+                .json({ success: false, message: "No Properties Found!!" })
         }
 
-        res.status(200)
-            .json({ success: true, message: "Property Updated Successfully!!", property })
+        res.json({ success: true, properties });
     } catch (error) {
-        console.log(error.message)
-        return res.json({ success: false, message: "Error While Updating Property" })
+        res.status(500).json({ success: false, message: "Error retrieving properties" });
     }
 }
 
@@ -137,8 +139,92 @@ const deleteProperty = async (req, res) => {
 
         res.json({ success: true, message: "Property deleted successfully" });
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         return res.json({ success: false, message: "Error While Deleting Property" })
+    }
+}
+
+// Chnage Property Status.....
+const changePropertyStatus = async (req, res) => {
+    const { propertyId } = req.params
+    const status = req.body
+
+    try {
+        const property = await Property.findByIdAndUpdate(propertyId, status, { new: true })
+        if (!property) {
+            return res.status(404).json({ success: false, message: "Property not found" });
+        }
+
+        res.json({ success: true, message: "Property Status Updated successfully", property });
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: "Error While Deleting Property" })
+    }
+}
+
+// Edit Property Details...
+const editPropertyDetails = async (req, res) => {
+    try {
+        const { propertyId } = req.params;
+        const { title, description, adderess, propertyType, numberOfBadrooms, numberOfBathrooms, amenities, status, price } = req.body;
+        const landlordId = req.landlord._id;
+        // console.log(landlordId)
+        // Check if the property exists
+        const property = await Property.findById(propertyId);
+        if (!property) {
+            return res.status(404).json({ success: false, message: "Property not found." });
+        }
+
+        // Ensure the landlord owns the property
+        // console.log(property.landlord)
+        if (property.landlord.toString() !== landlordId.toString()) {
+            return res.status(403).json({ success: false, message: "Unauthorized request." });
+        }
+
+        // Handle image uploads if new images are provided
+        const image1 = req.files.image1 && req.files.image1[0]
+        const image2 = req.files.image2 && req.files.image2[0]
+        const image3 = req.files.image3 && req.files.image3[0]
+        const image4 = req.files.image4 && req.files.image4[0]
+        const image5 = req.files.image5 && req.files.image5[0]
+
+        let imageUrl = [...property.images]; // Keep the existing images by default
+        const newImages = [image1, image2, image3, image4, image5].filter(item => item !== undefined);
+
+        if (newImages.length > 0) {
+            const uploadedImages = await Promise.all(
+                newImages.map(async (item) => {
+                    const result = await uploadOnCloudinary(item.path);
+                    return result.url;
+                })
+            );
+
+            // Concatenate new images with existing ones
+            imageUrl = [...imageUrl, ...uploadedImages];
+        }
+
+        // Update property details
+        const updatedProperty = await Property.findByIdAndUpdate(
+            propertyId,
+            {
+                title,
+                description,
+                adderess,
+                propertyType,
+                numberOfBadrooms,
+                numberOfBathrooms,
+                amenities,
+                status,
+                price,
+                images: imageUrl // Update images, keeping existing ones if necessary
+            },
+            { new: true } 
+        );
+
+        return res.status(200).json({ success: true, message: "Property updated successfully", updatedProperty });
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: error.message })
     }
 }
 export {
@@ -146,6 +232,8 @@ export {
     getAllProperty,
     getPropertyById,
     getPropertyByLandlordId,
-    updateProperty,
-    deleteProperty
+    getPropertyByTenantId,
+    deleteProperty,
+    changePropertyStatus,
+    editPropertyDetails
 }

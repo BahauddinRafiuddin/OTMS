@@ -14,6 +14,7 @@ const createToken = (id) => {
     }
 };
 
+// Register Landlord
 const registerLandlord = async (req, res) => {
     try {
         const { firstName, lastName, email, password, phoneNumber, gender, dateOfBirth, panCardNumber } = req.body
@@ -99,6 +100,7 @@ const registerLandlord = async (req, res) => {
     }
 }
 
+// Landlord Login
 const landlordLogin = async (req, res) => {
     try {
         const { email, password } = req.body
@@ -119,7 +121,7 @@ const landlordLogin = async (req, res) => {
             )
         } else {
             const token = createToken(existUser._id)
-            res.json({ success: true, message: "Landlord LogedIn Succesfully", token })
+            res.json({ success: true, message: "Landlord LogedIn Succesfully", token, landlord: existUser })
         }
 
     } catch (error) {
@@ -132,9 +134,12 @@ const landlordLogin = async (req, res) => {
 
 }
 
+// get Landlord By Landlord Id
 const getLandlordById = async (req, res) => {
     try {
-        const landlord = req.landlord
+        const { landlordId } = req.params
+        const landlord = await Landlord.findById(landlordId).select("-password")
+
         if (!landlord) {
             return res.json({ success: false, message: "Landlord Not Found" })
         }
@@ -142,12 +147,103 @@ const getLandlordById = async (req, res) => {
         res.json({ success: true, message: "Landlord Details ", landlord })
     } catch (error) {
         console.log(error.message)
-        return res.status(500).json({ success: false, message: "Error While Geting Landlord!!" })
+        return res.status(500).json({ success: false, message: error.message })
     }
 }
 
+// Get All Landlords..
+const getAllLandlords = async (req, res) => {
+    try {
+        const landlords = await Landlord.find()
+        if (!landlords) {
+            return res.json({ success: false, message: "Landlords Not Found!!" })
+        }
+
+        res.status(200)
+            .json({ success: true, message: "Landlord Found Successfully!!", landlords })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ success: false, message: error.message })
+    }
+}
+
+// Update Landlord Details...
+const updateLandlordProfile = async (req, res) => {
+    try {
+        const { landlordId } = req.params
+        const update = req.body
+
+        if (req.file) {
+            const avatarLocalPath = req.file.path
+            const avatar = await uploadOnCloudinary(avatarLocalPath)
+            update.avatar = avatar.url
+        }
+
+        const updatedLandlord = await Landlord.findByIdAndUpdate(landlordId, update, { new: true }).select("-password")
+        if (!updatedLandlord) {
+            return res.status(404)
+                .json({ success: false, message: "Landlord Doses Not Exist!!" })
+        }
+
+        res.json({ success: true, message: "Landlord Details Updated Successfully", landlord: updatedLandlord })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ success: false, message: error.message })
+    }
+}
+
+// Delete Landlord.....
+const deleteLandlord = async (req, res) => {
+    try {
+        const { landlordId } = req.params
+
+        const deletedLandlord = await Landlord.findByIdAndDelete(landlordId)
+        if (!deletedLandlord) {
+            return res.status(404)
+                .json({ success: false, message: "landlord Doses Not Exist!!" })
+        }
+
+        res.json({ success: true, message: "Landlord Deleted Successfully", landlord: deletedLandlord })
+    } catch (error) {
+        console.log(error.message)
+        return res.status(500).json({ success: false, message: error.message })
+    }
+}
+
+// Chnage Landlord Change Password..
+const landlordChangePassword = async (req, res) => {
+    const landlordId = req.landlord._id
+    const { oldPassword, newPassword } = req.body
+
+    try {
+        const landlord = await Landlord.findById(landlordId)
+        if (!landlord) {
+            return res.status(404).json({ success: false, message: "Landlord not found." });
+        }
+
+        const validPassword = await bcrypt.compare(oldPassword, landlord.password)
+        if (!validPassword) {
+            return res.status(400).json({ success: false, message: "Invalid Creadentials!!" })
+        }
+
+        const hashPassword = await bcrypt.hash(newPassword, 10)
+        landlord.password = hashPassword
+        await landlord.save()
+
+        return res.status(200).json({ success: true, message: "Password updated successfully!" });
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ success: false, message: error.message })
+    }
+
+}
 export {
     registerLandlord,
     landlordLogin,
-    getLandlordById
+    getLandlordById,
+    getAllLandlords,
+    updateLandlordProfile,
+    deleteLandlord,
+    landlordChangePassword
 }
