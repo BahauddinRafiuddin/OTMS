@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: Outfit;
+    padding: 0;
+    margin: 0;
+}
+
+.property-details-page {
+    /* border: 1px solid black; */
+    margin: 10px 5%;
+}
+
+.property-details-page h1 {
+    text-align: center;
+    font-weight: 300;
+    margin-top: 2rem;
+}
+
+.property-details-card {
+    display: flex;
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 470px;
+    padding: 20px;
+    margin-top: 1rem;
+    box-shadow: 0px 0px 5px black;
+    border-radius: 10px;
+}
+
+/* Left Side............................................................ */
+.left-side-iamges {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    /* border: 1px solid; */
+}
+
+.property-image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    /* box-shadow: 0px 0px 5px black; */
+    border-radius: 0.5rem;
+}
+
+.image-hidden {
+    display: none;
+}
+
+.arrow {
+    position: absolute;
+    width: 50px;
+    filter: drop-shadow(0px 0px 1px white);
+    cursor: pointer;
+}
+
+.arrow:hover {
+    width: 48px;
+    filter: drop-shadow(0px 0px 1px black);
+
+}
+
+.left-arrow {
+    left: 1rem;
+}
+
+.right-arrow {
+    right: 1rem;
+}
+
+.indicators {
+    display: flex;
+    position: absolute;
+    bottom: 1rem;
+}
+
+.indicator {
+    border-radius: 100%;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    background-color: white;
+    box-shadow: 0px 0px 5px black;
+    border: none;
+    outline: none;
+    margin: 0 0.3rem;
+}
+
+.indicator:hover {
+    border: 1.5px dotted;
+}
+
+.indicator-inactive {
+    background-color: #2200ff;
+}
+
+
+/* Roght Side Property Details.......................... */
+.right-side-property-details {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* border: 1px solid; */
+    border-radius: 8px;
+    background-color: #eeeeef;
+    width: 60%;
+    min-width: 40%;
+    margin-left: 1rem;
+    padding: 15px;
+}
+
+.right-side-property-details img:hover {
+    opacity: 1;
+}
+
+
+/* Property TITLE AND ADDERESS................................. */
+.property-title-adderess {
+    display: flex;
+    /* border: 1px solid; */
+    gap: 10rem;
+    align-items: center;
+}
+
+.property-title-adderess span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 300;
+    color: grey;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.property-title-adderess span .titleImg {
+    width: 28px;
+    opacity: 0.8;
+}
+
+.property-title-adderess span .addressImg {
+    width: 20px;
+    opacity: 0.8;
+}
+
+.property-title-adderess h5 {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+/* Property Description............................. */
+.property-description span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 300;
+    color: grey;
+    font-size: 20px;
+    margin-bottom: 7px;
+}
+
+.property-description span img {
+    width: 25px;
+    opacity: 0.8;
+}
+
+.property-description h5 {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+/* Property Type And Price....................... */
+.property-type-price {
+    display: flex;
+    /* border: 1px solid; */
+    gap: 10rem;
+    align-items: center;
+}
+
+.property-type-price span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 300;
+    color: grey;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.property-type-price span img {
+    width: 25px;
+    opacity: 0.8;
+}
+
+.property-type-price h5 {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+/* Number Of Badrooms And Bath Rooms................ */
+.property-badrooms-bathrooms {
+    margin-top: 8px;
+    display: flex;
+    /* border: 1px solid; */
+    align-items: center;
+    gap: 5rem;
+}
+
+.property-badrooms-bathrooms span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 300;
+    color: grey;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.property-badrooms-bathrooms span img {
+    width: 28px;
+    opacity: 0.8;
+}
+
+.property-badrooms-bathrooms h5 {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.hrTage {
+    display: block;
+}
+
+/* Property Status..... */
+.property-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 115px;
+    height: 23px;
+    background: #d6efff;
+    clip-path: polygon(0% -1%, 100% 0%, 100% 100%, 0% 100%, calc(100% - 92px) 50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 12px;
+    padding-left: 30px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    background: green;
+    color: white;
+    border-radius: 5px;
+}
+
+.property-status-not-available {
+    background: red;
+}
+
+
+/* Landlord Details Card..... */
+.scroll-button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.scroll-to-landlord-button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.scroll-to-landlord-button:hover {
+    background-color: #2980b9;
+}
+
+.landlord-details-card {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px black;
+    width: 450px;
+    margin: 10% 35%;
+}
+
+.landlord-details-card h5{
+    text-align: center;
+    font-size: 20px;
+    font-family:sans-serif;
+}
+
+.landlord-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid; */
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.landlord-info .avatar-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0px 0px 7px black;
+}
+
+.landlord-info h5 {
+    margin: 10px 0;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.landlord-contact {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    /* border: 1px solid; */
+    gap:10px;
+    font-size: 18px;
+}
+.landlord-contact div{
+    display: flex;
+    align-items: center;
+}
+
+.landlord-contact img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}

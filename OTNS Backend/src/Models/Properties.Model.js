@@ -57,7 +57,7 @@ const propertiesSchema=new Schema(
             required:true
         }
     },
-    {timeseries:true}
+    {timestamps:true}
 )
 
 export const Property=mongoose.model("Property",propertiesSchema)

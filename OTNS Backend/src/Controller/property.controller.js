@@ -70,7 +70,24 @@ const getAllProperty = async (req, res) => {
 
     } catch (error) {
         console.log(error.message)
-        return res.json({ success: false, message: "Error While Geting Property" })
+        return res.json({ success: false, message: error.message })
+    }
+}
+
+// Get Best Resently Added Properties..
+const getResentlyAddProperty = async (req, res) => {
+    try {
+        const resentlyAddedPropeties = await Property.find({ status: 'Available' })
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .populate('landlord')
+            .exec()
+
+        res.status(200)
+            .json({ success: true, message: "Property Found Successfully!!", resentlyAddedPropeties })
+    } catch (error) {
+        console.log(error.message)
+        return res.json({ success: false, message: error.message })
     }
 }
 
@@ -78,14 +95,45 @@ const getAllProperty = async (req, res) => {
 const getPropertyById = async (req, res) => {
     try {
         const { propertyId } = req.params
-        const property = await Property.findById(propertyId)
+        const property = await Property.findById(propertyId).populate('landlord')
 
         if (!property) {
             return res.json({ success: false, message: "Property Not Found!" })
         }
 
+        // Extract important landlord details
+        const landlordDetails = {
+            id: property.landlord._id,
+            firstName: property.landlord.firstName, // Adjust this according to your Landlord schema
+            lastName: property.landlord.lastName, // Adjust as needed
+            contact: property.landlord.phoneNumber,
+            email:property.landlord.email,
+            avatar:property.landlord.avatar
+            // Add other important fields as necessary
+        };
+
+        // Create a response object with only necessary property details
+        const responseData = {
+            success: true,
+            message: "Property Found Successfully!!",
+            property: {
+                _id: property._id,
+                title: property.title,
+                description: property.description,
+                address: property.adderess,
+                propertyType: property.propertyType,
+                numberOfBedrooms: property.numberOfBadrooms,
+                numberOfBathrooms: property.numberOfBathrooms,
+                amenities: property.amenities,
+                status: property.status,
+                price: property.price,
+                images: property.images,
+            },
+            landlord: landlordDetails
+        };
+
         res.status(200)
-            .json({ success: true, message: "Property Found Successfully!!", property })
+            .json({ responseData })
     } catch (error) {
         console.log(error.message)
         return res.json({ success: false, message: "Error While Getting Property" })
@@ -218,7 +266,7 @@ const editPropertyDetails = async (req, res) => {
                 price,
                 images: imageUrl // Update images, keeping existing ones if necessary
             },
-            { new: true } 
+            { new: true }
         );
 
         return res.status(200).json({ success: true, message: "Property updated successfully", updatedProperty });
@@ -230,6 +278,7 @@ const editPropertyDetails = async (req, res) => {
 export {
     addProperty,
     getAllProperty,
+    getResentlyAddProperty,
     getPropertyById,
     getPropertyByLandlordId,
     getPropertyByTenantId,

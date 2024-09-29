@@ -1,0 +1,231 @@
+* {
+    box-sizing: border-box;
+}
+
+.property-page {
+    display: flex;
+    /* border: 1px solid; */
+    margin: 10px 5%;
+    gap: 15px;
+    min-height: 80vh;
+    font-family: Outfit;
+    padding: 10px 0;
+}
+
+
+
+/* Side Bar Css............Left Side......................... */
+.properties-filter-sidebar {
+    min-width: 20%;
+    /* border: 1px solid red; */
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px grey;
+}
+
+/* Type Filter */
+.property-type-filter {
+    /* border: 1px solid blue; */
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.property-type-filter span {
+    /* padding-left: 23px; */
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: large;
+}
+
+.property-type-filter select {
+    width: 50%;
+    height: 30px;
+    font-family: Outfit;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(227, 227, 227);
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+/* Price Filter.................................... */
+.property-price-filter {
+    /* border: 1px solid blue; */
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.property-price-filter span {
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: large;
+    /* padding-left: 23px; */
+}
+
+.property-price-filter .min-max-price-select {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.min-max-price-select select {
+    width: 45%;
+    height: 30px;
+    font-family: Outfit;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(227, 227, 227);
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+/* Amenities Filters........................ */
+.property-amenities-filter {
+    /* border: 1px solid blue; */
+    /* min-height: 100px; */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+}
+
+.property-amenities-filter span {
+    font-weight: 500;
+    font-size: large;
+    margin-bottom: 10px;
+}
+
+.amenities-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.amenities-checkboxes label {
+    display: flex;
+    gap: 10px;
+    color: grey;
+    font-weight: 450;
+    cursor: pointer;
+}
+
+/* Btn.... */
+.filter-btn-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.filter-btn-div .apply-filter-btn {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    width: 40%;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 9px;
+    box-shadow: 1px 1px black;
+    font-family: Outfit;
+    font-weight: bold;
+    font-size: 12px;
+    transition: all ease 0.5s;
+    cursor: pointer;
+    background-color: rgb(90, 90, 255);
+}
+
+.clear-btn{
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    width: 40%;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 9px;
+    box-shadow: 1px 1px black;
+    font-family: Outfit;
+    font-weight: bold;
+    font-size: 12px;
+    transition: all ease 0.5s;
+    cursor: pointer;
+    background-color: rgb(255, 71, 71);
+}
+
+
+.filter-btn-div button:hover {
+    font-size: 11px;
+    box-shadow: none;
+}
+
+.filter-btn-div img{
+    width: 20px;
+}
+
+
+
+
+
+/* Right Side */
+.propeties-details {
+    min-width: 80%;
+    /* border: 1px solid green; */
+    box-shadow: 0px 0px 5px grey;
+    border-radius: 5px;
+}
+.properties-details{
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+    flex-wrap: wrap;
+}
+.property-card {
+    width: 99%;
+    height: 300px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 0px 6px black;
+    display: flex;
+    padding: 10px;
+    box-sizing: border-box;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.property-card-image {
+    min-width: 32%;
+}
+
+.property-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.property-card-details {
+    min-width: 68%;
+    /* border: 1px solid green; */
+    padding: 10px;
+}

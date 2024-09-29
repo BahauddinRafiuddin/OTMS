@@ -12,6 +12,7 @@ import {
     getPropertyById,
     getPropertyByLandlordId,
     getPropertyByTenantId,
+    getResentlyAddProperty,
 } from '../Controller/property.controller.js'
 import { verifyJWTTenant } from '../Middlewares/tenant.auth.middleware.js'
 
@@ -21,6 +22,7 @@ const router = new Router()
 
 
 router.route('/').get(getAllProperty)
+router.route('/best-properties').get(getResentlyAddProperty)
 
 router.route('/add').post(verifyJWTLandlord,
     upload.fields([
@@ -32,7 +34,7 @@ router.route('/add').post(verifyJWTLandlord,
     ]),
     addProperty)
 
-router.route('/:propertyId').get(verifyJWTUser, getPropertyById)
+router.route('/:propertyId').get(getPropertyById)
     .put(verifyJWTLandlord,
         upload.fields([
             { name: 'image1', maxCount: 1 },

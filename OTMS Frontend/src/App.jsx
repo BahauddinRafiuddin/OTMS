@@ -6,21 +6,23 @@ import PropertyDeatails from "./pages/PropertyDeatails"
 import About from "./pages/About"
 import Contect from "./pages/Contect"
 import Footer from "./components/Footer"
+import Dashboard from "./pages/Dashboard"
 
 
 function App() {
-  
+
   return (
     <>
-      <Navbar/>
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/about" element={<About/>}/>
-          <Route path="/contact" element={<Contect/>}/>
-          <Route path="/properties" element={<Properties/>}/>
-          <Route path="/propertydetails/:propertyId" element={<PropertyDeatails/>}/>
-        </Routes>
-      <Footer/>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contect />} />
+        <Route path="/properties" element={<Properties />} />
+        <Route path="/propertydetails/:propertyId" element={<PropertyDeatails />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
+      </Routes>
+      {/* <Footer/> */}
     </>
   )
 }
