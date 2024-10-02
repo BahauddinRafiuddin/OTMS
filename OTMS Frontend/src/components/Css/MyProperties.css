@@ -1,0 +1,91 @@
+/* /* MyProperties.css */
+
+.landlord-properties {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.my-property-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.my-property-card:hover {
+    transform: scale(1.02);
+}
+
+.property-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.property-description,
+.property-address,
+.property-details,
+.property-amenities {
+    margin: 15px 0;
+    font-size: 1em;
+    color: #555;
+}
+
+.property-amenities {
+    font-style: italic;
+}
+
+.property-image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.property-image {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.red{
+    color: red;
+}
+.black{
+    color: #555;
+}
+.green{
+    color: green;
+}
+@media (max-width: 768px) {
+    .property-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .my-property-card {
+        padding: 15px;
+    }
+
+    .property-title {
+        font-size: 1.2em;
+    }
+}
+

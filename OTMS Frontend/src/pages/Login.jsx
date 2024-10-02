@@ -47,10 +47,11 @@ const Login = () => {
         localStorage.setItem("token", data.token); // Store token for session management
         localStorage.setItem("userType", isLandlord ? "landlord" : "tenant");
         console.log(data)
-        setIsLoggedIn(true);
         // Store only the user id in local state
         const userId = isLandlord ? data.landlord._id : data.tenant._id;
         setUserId(userId)
+        localStorage.setItem("userId", userId); // Store user ID in local storage
+        setIsLoggedIn(true);
         setUserType(isLandlord ? 'landlord' : 'tenant');
         alert(data.message)
         navigate('/')

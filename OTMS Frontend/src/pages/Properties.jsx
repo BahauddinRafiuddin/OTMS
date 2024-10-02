@@ -11,7 +11,7 @@ const Properties = () => {
   const navigate = useNavigate()
   const { properties, getAllProeprties } = useContext(PropertyContext)
   const [filterProperties, setFilterProperties] = useState(properties)
-  const {isLoggedIn}=useContext(AppContext)
+  const { isLoggedIn } = useContext(AppContext)
   const [filters, setFilters] = useState({
     type: '',
     minPrice: '',
@@ -167,14 +167,20 @@ const Properties = () => {
 
       <div className='properties-details'>
         {filterProperties.map((property) => (
-          <div className='property-card' key={property._id} onClick={() => { {isLoggedIn?navigate(`/propertydetails/${property._id}`):navigate('/login')} }}>
+          <div className='property-card' key={property._id} onClick={() => { { isLoggedIn ? navigate(`/propertydetails/${property._id}`) : navigate('/login') } }}>
             <div className="property-card-image">
               <img src={property.images[0]} alt={property.title} />
             </div>
             <div className="property-card-details">
-              <span>{property.title}</span>
-              <p>{property.description}</p>
-              <span>Price: {property.price}</span>
+              <h3 className="property-title">{property.title}</h3>
+              <p className="property-description"><strong>Description:</strong> {property.description}</p>
+              <p className="property-address"><strong>Address:</strong> {property.adderess}</p>
+              <p className="property-details"><strong>Type:</strong> {property.propertyType}</p>
+              <p className="property-details"><strong>Price:</strong> ${property.price.toLocaleString()}</p>
+              <p className={property.status === "Available" ? "property-details green" : "property-details red"}><strong className={property.status === "Available" ? "black" : "black"}>Status:</strong> {property.status}</p>
+              <p className="property-amenities"><strong>Amenities:</strong> {property.amenities.join(', ')}</p>
+              {/* <p className="property-details"><strong>Bedrooms:</strong> {property.numberOfBadrooms}</p>
+              <p className="property-details"><strong>Bathrooms:</strong> {property.numberOfBathrooms}</p> */}
             </div>
           </div>
         ))}

@@ -1,5 +1,7 @@
 import { uploadOnCloudinary } from "../Db/Cloudinary.js"
 import { Property } from "../Models/Properties.Model.js"
+import mongoose from 'mongoose';
+
 
 // Add Property...
 const addProperty = async (req, res) => {
@@ -107,8 +109,8 @@ const getPropertyById = async (req, res) => {
             firstName: property.landlord.firstName, // Adjust this according to your Landlord schema
             lastName: property.landlord.lastName, // Adjust as needed
             contact: property.landlord.phoneNumber,
-            email:property.landlord.email,
-            avatar:property.landlord.avatar
+            email: property.landlord.email,
+            avatar: property.landlord.avatar
             // Add other important fields as necessary
         };
 
@@ -142,6 +144,14 @@ const getPropertyById = async (req, res) => {
 
 // Get Property By LandlordID:.....
 const getPropertyByLandlordId = async (req, res) => {
+
+    // Validate landlordId
+    if (!mongoose.isValidObjectId(req.params.landlordId)) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid landlord ID format."
+        });
+    }
     try {
         const properties = await Property.find({ landlord: req.params.landlordId })
             .populate({
@@ -149,9 +159,21 @@ const getPropertyByLandlordId = async (req, res) => {
                 select: "firstName lastName"
             })
 
+        // If no properties found
+        if (properties.length === 0) {
+            return res.status(404).json({
+                success: true,
+                properties: [],
+                message: "No properties found for this landlord."
+            });
+        }
         res.json({ success: true, properties });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error retrieving properties" });
+        console.error("Error retrieving properties:", error); // Log the error for debugging
+        res.status(500).json({
+            success: false,
+            message: "Error retrieving properties."
+        });
     }
 }
 

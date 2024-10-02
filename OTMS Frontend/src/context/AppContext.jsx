@@ -8,16 +8,18 @@ export const AppProvider = ({ children }) => {
     const navigate = useNavigate()
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState('');
-    const [userId, setUserId] = useState('')
+    const [userId, setUserId] = useState(()=> localStorage.getItem('userId'))
+
 
     // Check if user is already logged in when the app loads
     useEffect(() => {
         const token = localStorage.getItem('token');
         const userType = localStorage.getItem('userType');
-
+        const storedUserId = localStorage.getItem('userId');
         if (token) {
             setIsLoggedIn(true);
             setUserType(userType);
+            setUserId(storedUserId); // Set user ID in state
         }
     }, []);
 
@@ -25,8 +27,10 @@ export const AppProvider = ({ children }) => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userType');
+        localStorage.removeItem('userId'); // Clear user ID on logout
         setIsLoggedIn(false);
         setUserType('');
+        setUserId(null); // Reset userId state
         navigate('/login')
     };
 

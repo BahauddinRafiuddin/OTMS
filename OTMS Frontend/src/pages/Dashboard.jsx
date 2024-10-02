@@ -8,6 +8,7 @@ import myProfile from '../assets/myProfile.svg'
 import hometitle from '../assets/property.svg'
 import avatarSVG from '../assets/avatarWhite.svg'
 import { NavLink } from 'react-router-dom';
+import MyProperties from './MyProperties';
 
 const Dashboard = () => {
     const { userType, userId } = useContext(AppContext)
@@ -67,8 +68,8 @@ const Dashboard = () => {
                     <Route index element={<About />} /> {/* Default profile page */}
 
                     <Route path="landlord-profile" element={<LandlordProfile />} />
-                    {/* <Route path="property" element={<Property />} />
-                    <Route path="rent" element={<Rent />} /> */}
+                    <Route path="my-properties" element={<MyProperties />} />
+                    {/* <Route path="rent" element={<Rent />} /> */}
                 </Routes>
             </div>
         </div>
