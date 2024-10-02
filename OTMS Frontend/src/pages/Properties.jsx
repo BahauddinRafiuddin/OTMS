@@ -5,11 +5,13 @@ import filter from '../assets/filter.svg'
 import cross from '../assets/cross.svg'
 import '../components/Css/Properties.css'
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../context/AppContext'
 
 const Properties = () => {
   const navigate = useNavigate()
   const { properties, getAllProeprties } = useContext(PropertyContext)
   const [filterProperties, setFilterProperties] = useState(properties)
+  const {isLoggedIn}=useContext(AppContext)
   const [filters, setFilters] = useState({
     type: '',
     minPrice: '',
@@ -165,7 +167,7 @@ const Properties = () => {
 
       <div className='properties-details'>
         {filterProperties.map((property) => (
-          <div className='property-card' key={property._id} onClick={() => { navigate(`/propertydetails/${property._id}`) }}>
+          <div className='property-card' key={property._id} onClick={() => { {isLoggedIn?navigate(`/propertydetails/${property._id}`):navigate('/login')} }}>
             <div className="property-card-image">
               <img src={property.images[0]} alt={property.title} />
             </div>

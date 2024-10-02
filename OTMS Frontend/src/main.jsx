@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
 import PropertyContextProvider from './context/PropertyContext.jsx'
+import { AppProvider } from './context/AppContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <PropertyContextProvider>
-      <App />
-    </PropertyContextProvider>
+    <AppProvider>
+      <PropertyContextProvider>
+        <App />
+      </PropertyContextProvider>
+    </AppProvider>
   </BrowserRouter>,
 
 )

@@ -13,15 +13,16 @@
     padding: 0px 10px;
     border-radius: 3px;
 
-     /* New properties */
-     
+    /* New properties */
+
 }
 
 .navbar span {
     font-size: 25px;
     cursor: pointer;
 }
-.navbar span:hover{
+
+.navbar span:hover {
     text-shadow: 1px 1px grey;
 }
 
@@ -53,11 +54,12 @@ hr {
 .active hr {
     display: block;
     outline: none;
-    width: 15px;
+    /* width: 15px; */
 }
 
 .nav-btn {
     display: flex;
+    /* align-items: center; */
     gap: 10px;
 }
 
@@ -80,4 +82,59 @@ hr {
 .nav-btn button:hover {
     box-shadow: none;
     font-size: 14px;
+}
+
+/* .nav-btn .logout-btn{
+    background-color: red;
+    padding-left: 14px;
+}
+.nav-btn .dashboard-btn{
+    display: flex;
+    background-color: #9494ff;
+    gap: 12px;
+    width: max-content;
+    align-items: center;
+} */
+
+.dashboard-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.dashboard-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 35px;
+    left: 0rem;
+    background-color: rgb(112, 169, 255);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    gap:10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    width: 110px;
+}
+
+.dropdown button {
+    background-color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.dropdown button:hover {
+    background-color: #f1f1f1;
+}
+
+.logout-btn {
+    color: red;
 }
