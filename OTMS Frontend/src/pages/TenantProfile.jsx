@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react'
 import { AppContext } from '../context/AppContext';
-import '../components/Css/LandlordProfilePage.css';
+import '../components/Css/TenantProfile.css';
 import cross from '../assets/cross.svg'
 
-const LandlordProfile = () => {
+const TenantProfile = () => {
     const { userId } = useContext(AppContext);
     const [loading, setLoading] = useState(true);
-    const [landlord, setLandlord] = useState(null);
+    const [tenant, setTenant] = useState(null);
     const [error, setError] = useState(null);
     const token = localStorage.getItem('token');
     const [isEditMode, setIsEditMode] = useState(false); // New state to handle edit mode
@@ -17,12 +17,13 @@ const LandlordProfile = () => {
         phoneNumber: '',
         dateOfBirth: '',
         gender: '',
-        panCardNumber: '',
         avatar: null // to handle avatar upload
     });
 
+
+
     useEffect(() => {
-        const getLandlordById = async () => {
+        const getTenantById = async () => {
             if (!userId || !token) {
                 setError("User is not logged in.");
                 setLoading(false);
@@ -30,7 +31,7 @@ const LandlordProfile = () => {
             }
 
             try {
-                const response = await fetch(`http://localhost:4000/api/landlord/${userId}`, {
+                const response = await fetch(`http://localhost:4000/api/tenant/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -39,19 +40,18 @@ const LandlordProfile = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch landlord details!');
+                    throw new Error('Failed to fetch Tenant details!');
                 }
 
-                const { landlord } = await response.json();
-                setLandlord(landlord);
+                const { tenant } = await response.json();
+                setTenant(tenant);
                 setFormData({
-                    firstName: landlord.firstName,
-                    lastName: landlord.lastName,
-                    email: landlord.email,
-                    phoneNumber: landlord.phoneNumber,
-                    dateOfBirth: new Date(landlord.dateOfBirth).toISOString().split('T')[0],
-                    gender: landlord.gender,
-                    panCardNumber: landlord.panCardNumber,
+                    firstName: tenant.firstName,
+                    lastName: tenant.lastName,
+                    email: tenant.email,
+                    phoneNumber: tenant.phoneNumber,
+                    dateOfBirth: new Date(tenant.dateOfBirth).toISOString().split('T')[0],
+                    gender: tenant.gender,
                     avatar: null // initial avatar state
                 });
             } catch (error) {
@@ -62,7 +62,7 @@ const LandlordProfile = () => {
             }
         };
 
-        getLandlordById();
+        getTenantById();
     }, [userId, token]);
 
     const toggleEditMode = () => {
@@ -94,14 +94,13 @@ const LandlordProfile = () => {
         formDataToSend.append('phoneNumber', formData.phoneNumber);
         formDataToSend.append('dateOfBirth', formData.dateOfBirth);
         formDataToSend.append('gender', formData.gender);
-        formDataToSend.append('panCardNumber', formData.panCardNumber);
 
         if (formData.avatar) {
             formDataToSend.append('avatar', formData.avatar); // append the avatar if selected
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/api/landlord/${userId}`, {
+            const response = await fetch(`http://localhost:4000/api/tenant/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -111,10 +110,10 @@ const LandlordProfile = () => {
 
             const result = await response.json();
             if (!response.ok) {
-                throw new Error(result.message || 'Failed to update landlord profile.');
+                throw new Error(result.message || 'Failed to update Tenant profile.');
             }
 
-            setLandlord(result.landlord); // Update landlord state with new data
+            setTenant(result.tenant); // Update landlord state with new data
             setIsEditMode(false); // Exit edit mode
         } catch (error) {
             console.log(error);
@@ -131,20 +130,20 @@ const LandlordProfile = () => {
     }
 
     return (
-        <div className='landlord-profile-page'>
-            <h2>Landlord Profile</h2>
-            {(landlord && !isEditMode) && (
-                <div className='profile-details'>
-                    <img src={landlord.avatar} alt={`${landlord.firstName} ${landlord.lastName}`} className='profile-avatar' />
-                    <p className='landlord-details'><strong>First Name:</strong> {landlord.firstName}</p>
-                    <p className='landlord-details'><strong>Last Name:</strong> {landlord.lastName}</p>
-                    <p className='landlord-details'><strong>Email:</strong> {landlord.email}</p>
-                    <p className='landlord-details'><strong>Phone Number:</strong> {landlord.phoneNumber}</p>
-                    <p className='landlord-details'><strong>Date of Birth:</strong> {new Date(landlord.dateOfBirth).toLocaleDateString()}</p>
-                    <p className='landlord-details'><strong>Gender:</strong> {landlord.gender}</p>
-                    <p className='landlord-details'><strong>PAN Card Number:</strong> {landlord.panCardNumber}</p>
+        <div className='tenant-profile-page'>
+            <h2>Tenant Profile</h2>
+            {(tenant && !isEditMode) && (
+                <div className='tenant-profile-details'>
+                    <img src={tenant.avatar} alt={`${tenant.firstName} ${tenant.lastName}`} className='profile-avatar' />
+                    <p className='tenant-details'><strong>First Name:</strong> {tenant.firstName}</p>
+                    <p className='tenant-details'><strong>Last Name:</strong> {tenant.lastName}</p>
+                    <p className='tenant-details'><strong>Email:</strong> {tenant.email}</p>
+                    <p className='tenant-details'><strong>Phone Number:</strong> {tenant.phoneNumber}</p>
+                    <p className='tenant-details'><strong>Date of Birth:</strong> {new Date(tenant.dateOfBirth).toLocaleDateString()}</p>
+                    <p className='tenant-details'><strong>Gender:</strong> {tenant.gender}</p>
+                    {/* <p className='tenant-details'><strong>PAN Card Number:</strong> {tenant.panCardNumber}</p> */}
 
-                    <button className="edit-profile-btn" onClick={toggleEditMode}>
+                    <button className="tenant-edit-profile-btn" onClick={toggleEditMode}>
                         Edit Profile
                     </button>
                 </div>
@@ -153,7 +152,7 @@ const LandlordProfile = () => {
             {isEditMode && (
                 <div className='edit-profile-page'>
                     <h3>Edit Profile</h3>
-                    <img src={cross} className='cross-img' onClick={toggleEditMode}/>
+                    <img src={cross} className='cross-img' onClick={toggleEditMode} />
                     <form onSubmit={handleSubmit} className='edit-profile-form'>
                         <label>
                             First Name:
@@ -214,16 +213,6 @@ const LandlordProfile = () => {
                             </select>
                         </label>
                         <label>
-                            PAN Card Number:
-                            <input
-                                type="text"
-                                name="panCardNumber"
-                                value={formData.panCardNumber}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </label>
-                        <label>
                             Avatar:
                             <input
                                 type="file"
@@ -238,9 +227,7 @@ const LandlordProfile = () => {
                 </div>
             )}
         </div>
+    )
+}
 
-
-    );
-};
-
-export default LandlordProfile;
+export default TenantProfile

@@ -22,7 +22,7 @@
     display: flex;
     /* border: 1px solid red; */
     width: 100%;
-    height: 470px;
+    height: 500px;
     padding: 20px;
     margin-top: 1rem;
     box-shadow: 0px 0px 5px black;
@@ -39,7 +39,7 @@
     /* border: 1px solid; */
 }
 
-.property-image {
+.property-details-image {
     object-fit: cover;
     height: 100%;
     width: 100%;
@@ -263,8 +263,9 @@
 
 /* Landlord Details Card..... */
 .scroll-button-container {
-    text-align: center;
-    margin-bottom: 20px;
+   display: flex;
+   justify-content: space-evenly;
+    margin-top: 10px;
 }
 
 .scroll-to-landlord-button {
@@ -278,6 +279,21 @@
 }
 
 .scroll-to-landlord-button:hover {
+    background-color: #2980b9;
+}
+
+.rent-property-btn{
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+.rent-property-btn:hover{
     background-color: #2980b9;
 }
 

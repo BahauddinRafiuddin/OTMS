@@ -297,6 +297,23 @@ const editPropertyDetails = async (req, res) => {
         return res.json({ success: false, message: error.message })
     }
 }
+
+// Add Tenant Details In Property (If Tenant By Or Rent Property)
+const addTenantDetails = async (req, res) => {
+    const { propertyId } = req.params
+    try {
+        const tenant = req.tenant._id
+        const property = await Property.findByIdAndUpdate(propertyId, { tenant: tenant, status: "Sold" }, { new: true })
+        if (!property) {
+            return res.status(404).json({ success: false, message: "Property not found" });
+        }
+
+        res.json({ success: true, message: "Tenant details added and property marked as sold", property });
+    } catch (error) {
+        console.log(error.message)
+        return res.status(500).json({ success: false, message: error.message })
+    }
+}
 export {
     addProperty,
     getAllProperty,
@@ -306,5 +323,6 @@ export {
     getPropertyByTenantId,
     deleteProperty,
     changePropertyStatus,
-    editPropertyDetails
+    editPropertyDetails,
+    addTenantDetails
 }

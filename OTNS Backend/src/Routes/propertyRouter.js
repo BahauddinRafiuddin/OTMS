@@ -5,6 +5,7 @@ import { verifyJWTLandlord } from '../Middlewares/auth.middleware.js'
 import { verifyJWTUser } from '../Middlewares/shared.auth.middleware.js'
 import {
     addProperty,
+    addTenantDetails,
     changePropertyStatus,
     deleteProperty,
     editPropertyDetails,
@@ -48,6 +49,7 @@ router.route('/:propertyId').get(getPropertyById)
 router.route('/landlord/:landlordId').get(verifyJWTLandlord, getPropertyByLandlordId)
 router.route('/tenant/:tenantId').get(verifyJWTTenant, getPropertyByTenantId)
 router.route('/change-status/:propertyId').put(verifyJWTUser, changePropertyStatus)
+router.route('/add-tenant/:propertyId').put(verifyJWTTenant,addTenantDetails)
 
 
 

@@ -18,7 +18,8 @@ const PropertyDeatails = () => {
   const [properties, setProperties] = useState({})
   const [landlord, setLandlord] = useState({})
   const [slide, setSlide] = useState(0)
-  
+  // const token = localStorage.getItem('token');
+
   // State to control visibility of landlord details
   const [showLandlordDetails, setShowLandlordDetails] = useState(false)
 
@@ -70,6 +71,31 @@ const PropertyDeatails = () => {
     }, 100) // Optional delay for smoother scroll transition
   }
 
+  const addTenantInProperty = async (propertyId) => {
+    // console.log(propertyId)
+    try {
+      const token = localStorage.getItem('token'); // Fetch token from local storage
+        if (!token) {
+            alert("User is not authenticated. Please log in.");
+            return;
+        }
+      const response = await fetch(`http://localhost:4000/api/property/add-tenant/${propertyId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to update Tenant Id In Property.');
+      }
+
+      alert(result.message)
+    } catch (error) {
+      alert(error.message);   // Show error message
+      console.log(error.message)
+    }
+  }
   return (
     <div className='property-details-page'>
       <h1>Property Details</h1>
@@ -79,7 +105,7 @@ const PropertyDeatails = () => {
         <div className="left-side-iamges">
           <img src={left} alt="" className='arrow left-arrow' onClick={previouseImage} /> {/*left Arrow................*/}
           {properties && properties.images && properties.images.map((image, index) => {
-            return <img src={image} alt={`Proerty Image ${index + 1}`} className={slide === index ? 'property-image' : 'property-image image-hidden'} key={index} />
+            return <img src={image} alt={`Proerty Image ${index + 1}`} className={slide === index ? 'property-details-image' : 'property-details-image image-hidden'} key={index} />
           })}
           <img src={right} alt="" className='arrow right-arrow' onClick={nextImage} /> {/*Right Arrow..............*/}
 
@@ -159,6 +185,9 @@ const PropertyDeatails = () => {
             <button onClick={scrollToLandlordDetails} className="scroll-to-landlord-button">
               View Landlord Details
             </button>
+            {properties.status === "Available" && <button className='rent-property-btn' onClick={() => addTenantInProperty(properties._id)}>
+              Rent Property
+            </button>}
           </div>
 
         </div>

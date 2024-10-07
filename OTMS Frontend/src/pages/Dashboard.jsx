@@ -9,6 +9,7 @@ import hometitle from '../assets/property.svg'
 import avatarSVG from '../assets/avatarWhite.svg'
 import { NavLink } from 'react-router-dom';
 import MyProperties from './MyProperties';
+import TenantProfile from './TenantProfile';
 
 const Dashboard = () => {
     const { userType, userId } = useContext(AppContext)
@@ -30,33 +31,31 @@ const Dashboard = () => {
                         <li>
                             <img src={hometitle} alt="" />
                             <NavLink to="/dashboard/my-properties" >
-                                My Properties                              
+                                My Properties
                             </NavLink>
                         </li>
                         <li>
                             <img src={avatarSVG} alt="" />
                             <NavLink to="/dashboard/tenant-details" >
-                                Tenant Details                         
+                                Tenant Details
                             </NavLink>
                         </li>
                     </ul>
                     :
                     <ul>
                         <li>
-                            <NavLink to="/dashboard/about" >
-                                Profile
+                            <img src={myProfile} alt="" />
+                            <NavLink to="/dashboard/tenant-profile" >
+                                My Profile
                             </NavLink>
                         </li>
                         <li>
+                            <img src={hometitle} alt="" />
                             <NavLink to="/dashboard/property" >
-                                Property
+                                Properties
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/dashboard/rent" >
-                                Rent
-                            </NavLink>
-                        </li>
+                        
                     </ul>
                 }
 
@@ -65,11 +64,19 @@ const Dashboard = () => {
             {/* Right Content Area with Nested Routes */}
             <div className="dashboard-content">
                 <Routes>
-                    <Route index element={<About />} /> {/* Default profile page */}
+                    {userType === "landlord"
+                        ? <Route index element={<LandlordProfile />} />
+                        : <Route index element={<TenantProfile />} />
+                    }
 
+                    {/* Landlord Pages................ */}
                     <Route path="landlord-profile" element={<LandlordProfile />} />
                     <Route path="my-properties" element={<MyProperties />} />
                     {/* <Route path="rent" element={<Rent />} /> */}
+
+
+                    {/* Tenants Pages..................... */}
+                    <Route path="tenant-profile" element={<TenantProfile />} />
                 </Routes>
             </div>
         </div>

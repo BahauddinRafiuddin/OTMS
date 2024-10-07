@@ -23,7 +23,7 @@ const propertiesSchema=new Schema(
         },
         adderess:{
             type:String,
-            reuired:true
+            required:true
         },
         propertyType:{
             type:String,
@@ -36,7 +36,7 @@ const propertiesSchema=new Schema(
         },
         numberOfBathrooms:{
             type:Number,
-            reuired:true
+            required:true
         },
         amenities:{
             type:[String],
